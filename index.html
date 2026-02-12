@@ -146,6 +146,12 @@
     const hisName = "Arslan 💖";
     const music = document.getElementById("bgMusic");
 
+     if (music && music.paused) {
+            music.volume = 0.5;
+            music.play().catch(() => {});
+        }
+    }
+
 
     const steps = [
         {
@@ -308,3 +314,4 @@
 
 </body>
 </html>
+
