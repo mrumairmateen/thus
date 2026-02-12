@@ -146,6 +146,13 @@
     const hisName = "Arslan 💖";
     const music = document.getElementById("bgMusic");
 
+    setTimeout(() => {
+        debugger
+        if (music && music.paused) {
+            music.volume = 0.5;
+            music.play().catch(() => {});
+        }
+    }, 300)
 
     const steps = [
         {
