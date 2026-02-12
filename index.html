@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>One Question 💖</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #fff1f5, #91b7eb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 40px 30px;
+            border-radius: 18px;
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            animation: fadeIn 1s ease;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #2b2b2b;
+        }
+
+        p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        button {
+            border: none;
+            padding: 12px 22px;
+            font-size: 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .primary {
+            background: #e63946;
+            color: white;
+        }
+
+        .primary:hover {
+            transform: scale(1.05);
+        }
+
+        .secondary {
+            background: #f1f1f1;
+            margin-left: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Floating Hearts */
+        .heart {
+            position: fixed;
+            bottom: -20px;
+            font-size: 18px;
+            animation: floatUp 6s linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-110vh) scale(1.6);
+                opacity: 0;
+            }
+        }
+
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            top: -10px;
+            animation: fall 3s linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card" id="card">
+    <h1 id="title">Hey…</h1>
+    <p id="text">I’ve been meaning to ask you something.</p>
+    <button class="primary" id="nextBtn">Ayeeennnn 🤍</button>
+</div>
+
+<audio autoplay id="bgMusic" loop preload="auto">
+    <source src="andriig-happy-birthday-471211.mp3" type="audio/mpeg">
+</audio>
+
+
+<script>
+    const hisName = "Arslan 💖";
+    const music = document.getElementById("bgMusic");
+
+
+    const steps = [
+        {
+            title: `Hey ${hisName}… 🤍`,
+            text: "Aaj tumse ek dil ki baat karni hai… jo shayad main roz mehsoos karti hoon."
+        },
+        {
+            title: "Tumhara Andaz 😌",
+            text: "Tumhara confidence aur tumhari personality… mujhe har roz impress karti hai."
+        },
+        {
+            title: "Safe Feeling 🫶",
+            text: "Tumhare saath mujhe ek sukoon milta hai… jaise duniya ruk gae hai."
+        },
+        {
+            title: "Hansi 😄",
+            text: "Tumhari hansi… sach mein addictive hai. Har tension gayab ho jati hai."
+        },
+        {
+            title: "Strong & Soft 💪",
+            text: "Tum strong bhi ho aur dil ke bohot soft bhi… aur ye combination rare hai."
+        },
+        {
+            title: "Little Moments ✨",
+            text: "Choti choti baatein… lekin tumhare saath har moment special lagta hai."
+        },
+        {
+            title: "Dil ka Decision ❤️",
+            text: "Dil ne calculate kiya… aur result clear tha. I choose you."
+        },
+        {
+            title: "Final Note 💌",
+            text: "Iss Birthday pe bas itna kehna hai… tum mery favorite insaan ho."
+        }
+    ];
+
+    let stepIndex = 0;
+
+    const card = document.getElementById("card");
+    const title = document.getElementById("title");
+    const text = document.getElementById("text");
+    const nextBtn = document.getElementById("nextBtn");
+
+    nextBtn.addEventListener("click", () => {
+        if (music && music.paused) {
+            music.volume = 0.5;
+            music.play().catch(() => {});
+        }
+
+        if (stepIndex < steps.length) {
+            title.textContent = steps[stepIndex].title;
+            text.textContent = steps[stepIndex].text;
+            stepIndex++;
+            resetAnimation();
+        } else {
+            showFinalQuestion();
+        }
+    });
+
+    function resetAnimation() {
+        card.style.animation = "none";
+        card.offsetHeight;
+        card.style.animation = "fadeIn 0.6s ease";
+    }
+
+    function startFloatingHearts() {
+        setInterval(() => {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.textContent = ["❤️", "💖", "💕", "💘"][Math.floor(Math.random() * 4)];
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 3 + 4 + "s";
+            document.body.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 7000);
+        }, 600);
+    }
+
+    function showFinalQuestion() {
+        card.innerHTML = `
+      <h1>${hisName}… 💕</h1>
+      <p>Can we go for a tour? and i dare you to say no!! </p>
+      <div class="buttons">
+        <button class="primary" id="yesBtn">Yes ❤️</button>
+        <button class="secondary" id="noBtn">No 🙈</button>
+      </div>
+    `;
+
+        document.getElementById("yesBtn").onclick = sayYes;
+
+        const noBtn = document.getElementById("noBtn");
+
+        const escape = () => {
+            noBtn.style.position = "fixed";
+            noBtn.style.left = Math.random() * (window.innerWidth - 120) + "px";
+            noBtn.style.top = Math.random() * (window.innerHeight - 60) + "px";
+            noBtn.textContent = [
+                "Bro… YES bolo 😎",
+                "Hahaha try again 😏",
+                "Dil ki suno ❤️",
+                "Nice try 😂",
+                "You know the answer 😌",
+                "Come on… YES 😄",
+                "Stop running 😆",
+                "Correct option is YES 💛",
+                "Areee… tumhari smile dekh kar YES bolna hi padega 😌",
+                "Nice try 😈",
+                "Almost 😂",
+                "Pick YES 💖",
+                "Dude C'mon 💖",
+                "Pick YES 💖",
+                "Dude C'mon 💖"
+            ][Math.floor(Math.random() * 15)];
+        };
+
+        noBtn.onmouseover = escape;
+        noBtn.onclick = escape;
+        noBtn.ontouchstart = escape;
+    }
+    function showScreenshotMoment() {
+        card.innerHTML = `
+    <h1>📸 Freeze this moment</h1>
+    <p>
+      This is officially our Birthday memory 💖<br/>
+      Take a screenshot and keep it forever, ${hisName}.
+    </p>
+    <p style="font-size:14px;opacity:0.7;">
+      (Yes, I planned this 😌)
+    </p>
+  `;
+    }
+    function sayYes() {
+        card.innerHTML = `
+    <h1>You said YES 💕</h1>
+    <p>${hisName}, you just made my heart very happy 😌</p>
+    <p>Happy Birthday 💘</p>
+
+    <button class="primary" onclick="showScreenshotMoment()">
+      📸 Screenshot this moment
+    </button>
+  `;
+        launchConfetti();
+        startFloatingHearts();
+    }
+
+
+    function launchConfetti() {
+        for (let i = 0; i < 60; i++) {
+            const c = document.createElement("div");
+            c.className = "confetti";
+            c.style.left = Math.random() * 100 + "vw";
+            c.style.backgroundColor = ["#e63946", "#ffb3c1", "#ffd6e0"][Math.floor(Math.random() * 3)];
+            c.style.animationDuration = Math.random() * 2 + 2 + "s";
+            document.body.appendChild(c);
+            setTimeout(() => c.remove(), 4000);
+        }
+    }
+</script>
+
+
+</body>
+</html>
